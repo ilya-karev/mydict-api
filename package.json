@@ -6,8 +6,9 @@
   "main": "app.js",
   "engines": { "node": "18.x" },
   "scripts": {
+    "build": "tsc && npm run start",
     "start": "nodemon server.ts",
-    "postinstall": "tsc",
+    "postinstall": "tsc && mv -i -v public dist/ && rm -v -rf src",
     "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
   "dependencies": {
