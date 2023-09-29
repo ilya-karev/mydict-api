@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { routes } from './routes';
+import cors from 'cors';
+import categoryRoutes from './routes/category';
+import languageRoutes from './routes/language';
+import userRoutes from './routes/user';
+import wordRoutes from './routes/word';
 
 const express = require("express");
 const morgan = require("morgan");
@@ -25,7 +29,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-app.use("/", routes);
+app.use(cors())
+app.use('/api/category', categoryRoutes)
+app.use('/api/language', languageRoutes)
+app.use('/api/user', userRoutes)
+app.use('/api/word', wordRoutes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const error = new Error("Not found") as any;
@@ -42,4 +50,7 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-module.exports = app;
+// start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("info", `Server started at PORT ${PORT}`))
+
